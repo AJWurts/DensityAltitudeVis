@@ -63,15 +63,15 @@ class App extends Component {
               label={"Humidity"} value={humidity} min={0} max={100}
               units={"%"} keyVal={'humidity'} onChange={this.onChange} /> */}
               <NumberSlider
-                label={"Pressure"} value={pressure} min={28.90} max={31.00}
+                label={"Pressure"} value={pressure} min={28.60} max={31.00}
                 units={"inHg"}
                 step={0.01} keyVal={'pressure'} onChange={this.onChange} />
             </div>
 
             <div style={{ padding: '20px 0px 0px 0px' }}>
-              <InputLabel onChange={this.onChange} keyVal={'temperature'} value={temperature} label={"Temperature"} />
+              <InputLabel onChange={this.onChange} keyVal={'temperature'} value={temperature} label={"Temperature (C)"} />
               {/* <InputLabel onChange={this.onChange} keyVal={'humidity'} value={humidity} label={"% Humidity"} /> */}
-              <InputLabel step={0.01} onChange={this.onChange} keyVal={'pressure'} value={pressure} label={"Pressure"} />
+              <InputLabel step={0.01} onChange={this.onChange} keyVal={'pressure'} value={pressure} label={"Pressure (inHg)"} />
             </div>
 
 
