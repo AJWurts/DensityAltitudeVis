@@ -20,7 +20,8 @@ class PressureGraph extends Component {
         d3.select(this.svg).selectAll('.hover').remove();
     }
 
-    onMouseMove = (event) => {
+
+    onUpdateHover = (clientY) => {
         let bbox = this.svg.getBoundingClientRect()
 
         let svg = d3.select(this.svg);
@@ -29,16 +30,12 @@ class PressureGraph extends Component {
             .domain([bbox.top, bbox.bottom])
             .range([0, 500])
 
-        svg.selectAll(".hover").remove()
+        let yVal = linScale(clientY);
 
-        let yVal = linScale(event.clientY)
+        svg.selectAll(".hover").remove()
 
         svg.append('path')
             .attr('d', `M 0,${yVal + 20} l 500,0`)
-            // .attr('x1', 0)
-            // .attr('x2', 500)
-            // .attr('y1', yVal + 20)
-            // .attr('y2', yVal + 20)
             .attr('class', 'hover')
             .attr('stroke', 'black')
             .attr('stroke-width', 2)
@@ -66,8 +63,17 @@ class PressureGraph extends Component {
             .attr('y', yVal + 14)
             .text('Density Alt: ' + this.invPresAltScale(yVal + 20).toFixed(0) + 'ft')
             .attr('text-anchor', 'end')
+    }
+
+    onMouseMove = (event) => {
+
+        this.onUpdateHover(event.clientY);
 
 
+    }
+
+    onTouchMove = (event) => {
+        this.onUpdateHover(event.targetTouches[0].clientY);
     }
 
     createGraph = (props) => {
@@ -155,9 +161,12 @@ class PressureGraph extends Component {
         return (
             <div>
                 <svg
-                    onPointerLeave={this.onMouseOut}
-                    onMouseMove={this.onMouseMove} ref={svg => this.svg = svg}
-                    viewBox="0 0 500 500" >
+                    // onPointerLeave={this.onMouseOut}
+                    onPointerMove={this.onMouseMove}
+                    onTouchMove={this.onTouchMove}
+                    ref={svg => this.svg = svg}
+                    viewBox="0 0 500 500" 
+                    style={{touchAction: 'none'}}>
 
                 </svg>
             </div>
