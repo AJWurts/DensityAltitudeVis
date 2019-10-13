@@ -9,7 +9,6 @@ class PressureGraph extends Component {
     UNSAFE_componentWillReceiveProps(props) {
         // this.props = props;
         // console.log(Object.keys(this.props));
-        console.log(props);
         this.createGraph(props)
     }
 
@@ -22,24 +21,21 @@ class PressureGraph extends Component {
     // }
 
     createGraph = (props) => {
-        console.log("Drawing");
         let svg = d3.select(this.svg);
         svg.selectAll('*').remove()
 
         let height = 500;
         let width = 500
 
-        svg.attr('width', height);
-        svg.attr('height', width);
+        // svg.attr('width', height);
+        // svg.attr('height', width);
 
          var {temperature, humidity, pressure} = props;
-
+        // console.log(temperature, humidity, pressure)
         let minAlt = (29.92 - pressure) * 1000
 
-        let minDAlt = minAlt + (120 * (15 - temperature))
+        let minDAlt = minAlt + (120 * (temperature - 15))
   
-
-
         let trueAltScale = d3.scaleLinear()
             .domain([0, 10000])
             .range([height, 0])
@@ -69,7 +65,7 @@ class PressureGraph extends Component {
             .attr('x', 10)
             .attr('y', d => trueAltScale(d) - 5)
             .text(d => d + "ft")
-
+            .attr('font-size', '20px')
 
         svg.selectAll('.pressurealt')
             .data(d3.range(-10000, 100001, 1000))
@@ -92,7 +88,8 @@ class PressureGraph extends Component {
             .attr('y', d => presAltScale(d) - 5)
             .attr('text-anchor', 'end')
             .text(d => d + "ft")
-            .attr('color', 'blue)')
+            .attr('color', 'blue')
+            .attr('font-size', '20px')
 
         
 
@@ -101,7 +98,8 @@ class PressureGraph extends Component {
     render() {
         return (
             <div>
-                <svg ref={svg => this.svg = svg} >
+                <svg ref={svg => this.svg = svg}
+                viewBox="0 0 500 500" >
 
                 </svg>
             </div>

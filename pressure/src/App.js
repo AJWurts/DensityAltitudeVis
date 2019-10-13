@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import PressureGraph from './components/visualization';
 import NumberSlider from './components/numberslider';
-import HumiditySlider from './components/humidityslider';
+import InputLabel from './components/input';
+import PressureGraph from './components/visualization';
 import './App.css';
 
 class App extends Component {
@@ -16,8 +16,15 @@ class App extends Component {
     }
   }
 
+  reset = () => {
+    this.setState({
+      temperature: 15,
+      humidity: 50,
+      pressure: 29.92
+    })
+  }
+
   onChange = (key, value) => {
-    console.log(key, value);
     this.setState({
       [key]: value
     })
@@ -27,22 +34,61 @@ class App extends Component {
     var { temperature, humidity, pressure } = this.state;
 
     return (
-      <div className="App">
-        {/* <header className="App-header"> */}
-        {/* </header> */}
-        <PressureGraph temperature={temperature} humidity={humidity} pressure={pressure}></PressureGraph>
-        <div style={{ padding: '20px' }}>
-          <NumberSlider val={temperature} keyVal={'temperature'}
-            min={-40} max={120} onChange={this.onChange} />
-          <NumberSlider val={humidity} min={0} max={100} keyVal={'humidity'} onChange={this.onChange} />
+      <div>
+
+
+        <div className="App">
+          <div style={{ display: 'inline-block', width: '75%', height: '100%', margin: '0px' }}>
+            <span style={{fontSize: '20px'}}>
+              True Altitude: Black
+              </span>
+            <span style={{ fontSize: '20px', float: 'right', color: 'blue'}}>
+              Density Altitude: Blue
+              </span>
+            <PressureGraph temperature={temperature} humidity={humidity} pressure={pressure}></PressureGraph>
+          </div>
+
+          <div style={{ padding: '20px', display: 'inline-block', height: '100%', verticalAlign: 'top' }}>
+            <div style={{ padding: '0px 0px 20px 0px' }}>
+
+              <NumberSlider
+                label={"Temperature"}
+                value={temperature}
+                keyVal={'temperature'}
+                step={1}
+                min={-20} max={50}
+                units={'C'}
+                onChange={this.onChange} />
+              {/* <NumberSlider
+              label={"Humidity"} value={humidity} min={0} max={100}
+              units={"%"} keyVal={'humidity'} onChange={this.onChange} /> */}
+              <NumberSlider
+                label={"Pressure"} value={pressure} min={28.90} max={31.00}
+                units={"inHg"}
+                step={0.01} keyVal={'pressure'} onChange={this.onChange} />
+            </div>
+
+            <div style={{ padding: '20px 0px 0px 0px' }}>
+              <InputLabel onChange={this.onChange} keyVal={'temperature'} value={temperature} label={"Temperature"} />
+              {/* <InputLabel onChange={this.onChange} keyVal={'humidity'} value={humidity} label={"% Humidity"} /> */}
+              <InputLabel step={0.01} onChange={this.onChange} keyVal={'pressure'} value={pressure} label={"Pressure"} />
+            </div>
+
+
+            <div>
+              <button onClick={this.reset}>
+                Reset
+              </button>
+            </div>
+          </div>
         </div>
-  
-  
-  
+        <div className={"App"}>
+
+        </div>
       </div>
-        );
-      }
-    
-    }
-    
-    export default App;
+    );
+  }
+
+}
+
+export default App;
