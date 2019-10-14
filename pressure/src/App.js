@@ -12,8 +12,22 @@ class App extends Component {
     this.state = {
       temperature: 15,
       humidity: 50,
-      pressure: 29.92
+      pressure: 29.92,
+      isMoble: false,
     }
+  }
+
+  handleWindowResize = () => {
+    this.setState({ isMobile: window.innerWidth < 600 });
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.handleWindowResize);
+    this.handleWindowResize()
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleWindowResize);
   }
 
   reset = () => {
@@ -31,18 +45,16 @@ class App extends Component {
   }
 
   render() {
-    var { temperature, humidity, pressure } = this.state;
+    var { temperature, humidity, pressure, isMobile } = this.state;
 
     return (
       <div>
-
-
         <div className="App">
-          <div style={{ display: 'inline-block', width: '75%', height: '100%', margin: '0px' }}>
-            <span style={{fontSize: '20px'}}>
+          <div style={{ display: 'inline-block', width: isMobile ? '100%' : '75%', height: '100%', margin: '0px' }}>
+            <span style={{ fontSize: '20px' }}>
               True Altitude: Black
               </span>
-            <span style={{ fontSize: '20px', float: 'right', color: 'blue'}}>
+            <span style={{ fontSize: '20px', float: 'right', color: 'blue' }}>
               Density Altitude: Blue
               </span>
             <PressureGraph temperature={temperature} humidity={humidity} pressure={pressure}></PressureGraph>
@@ -58,14 +70,20 @@ class App extends Component {
                 step={1}
                 min={-20} max={50}
                 units={'C'}
+                vertical={!isMobile}
                 onChange={this.onChange} />
               {/* <NumberSlider
               label={"Humidity"} value={humidity} min={0} max={100}
               units={"%"} keyVal={'humidity'} onChange={this.onChange} /> */}
               <NumberSlider
-                label={"Pressure"} value={pressure} min={28.60} max={31.00}
+                label={"Pressure"}
+                value={pressure}
+                min={28.60} max={31.00}
                 units={"inHg"}
-                step={0.01} keyVal={'pressure'} onChange={this.onChange} />
+                vertical={!isMobile}
+                step={0.01}
+                keyVal={'pressure'}
+                onChange={this.onChange} />
             </div>
 
             <div style={{ padding: '20px 0px 0px 0px' }}>

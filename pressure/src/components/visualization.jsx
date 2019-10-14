@@ -5,6 +5,7 @@ class PressureGraph extends Component {
     constructor(props) {
         super(props);
     }
+    
 
     UNSAFE_componentWillReceiveProps(props) {
 
@@ -161,13 +162,11 @@ class PressureGraph extends Component {
         return (
             <div>
                 <svg
-                    // onPointerLeave={this.onMouseOut}
                     onPointerMove={this.onMouseMove}
                     onTouchMove={this.onTouchMove}
                     ref={svg => this.svg = svg}
                     viewBox="0 0 500 500" 
                     style={{touchAction: 'none'}}>
-
                 </svg>
             </div>
         );

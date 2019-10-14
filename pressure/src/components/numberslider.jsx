@@ -15,18 +15,18 @@ class NumberSlider extends Component {
     }
 
     render() {
+        let { vertical } = this.props;
         return (
-            <div style={{   width:'50px', display: 'inline-block', height: '400px', verticalAlign: 'top'}}>
-                <div>
+            <div style={{   width: vertical ? '50px' : '200px', display: 'inline-block', height: vertical ? '400px' : '50px', verticalAlign: 'top'}}>
+                <div style={{display: vertical ? "block" : "inline-block"}}>
                     {this.props.max + this.props.units}
                 </div>
                 <Slider
                 {...this.props}
-                style={{height: '100%'}}
-                    vertical={true}
+                style={{height: '100%', display: vertical ? "block" : "inline-block"}}
                     onChange={this.onChange}
                 />
-                <div>
+                <div style={{display: vertical ? "block" : "inline-block"}} >
                     {this.props.min + this.props.units}
                 </div>
             </div>
