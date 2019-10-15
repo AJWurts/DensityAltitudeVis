@@ -73,10 +73,7 @@ class App extends Component {
             <span style={{ fontSize: '20px', float: 'right', color: 'blue' }}>
               Density Altitude: Blue
               </span>
-            {isPlaneView ?
-              <PlaneGraphic /> :
               <PressureGraph temperature={dataOne.temperature} humidity={dataOne.humidity} pressure={dataOne.pressure}></PressureGraph>
-            }
           </div>
 
           <div style={{ padding: '20px', display: 'inline-block', height: '100%', verticalAlign: 'top' }}>
