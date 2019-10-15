@@ -18,7 +18,7 @@ class App extends Component {
   }
 
   handleWindowResize = () => {
-    this.setState({ isMobile: window.innerWidth < 600 });
+    this.setState({ isMobile: window.innerWidth < 715 });
   }
 
   componentDidMount() {
@@ -50,7 +50,8 @@ class App extends Component {
     return (
       <div>
         <div className="App">
-          <div style={{ display: 'inline-block', width: isMobile ? '100%' : '75%', height: '100%', margin: '0px' }}>
+          <div style={{ display: 'inline-block', width: isMobile ? '90%' : '75%', margin: '0px',
+        maxWidth: isMobile ? null : '500px' }}>
             <span style={{ fontSize: '20px' }}>
               True Altitude: Black
               </span>
@@ -81,7 +82,7 @@ class App extends Component {
                 min={28.60} max={31.00}
                 units={"inHg"}
                 vertical={!isMobile}
-                step={0.01}
+                step={0.03}
                 keyVal={'pressure'}
                 onChange={this.onChange} />
             </div>
