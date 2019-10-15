@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import NumberSlider from './components/numberslider';
 import InputLabel from './components/input';
 import PressureGraph from './components/visualization';
-import PlaneGraphic from './components/planegraphic';
+
 import './App.css';
 
 class App extends Component {
