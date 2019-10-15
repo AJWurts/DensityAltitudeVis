@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import NumberSlider from './components/numberslider';
 import InputLabel from './components/input';
 import PressureGraph from './components/visualization';
+import PlaneGraphic from './components/planegraphic';
 import './App.css';
 
 class App extends Component {
@@ -10,10 +11,18 @@ class App extends Component {
     super(props);
 
     this.state = {
-      temperature: 15,
-      humidity: 50,
-      pressure: 29.92,
-      isMoble: false,
+      dataOne: {
+        temperature: 15,
+        humidity: 50,
+        pressure: 29.92,
+      },
+      dataTwo: {
+        temperature: 15,
+        humidity: 50,
+        pressure: 29.92,
+      },
+      isMobile: false,
+      isPlaneView: false
     }
   }
 
@@ -32,33 +41,42 @@ class App extends Component {
 
   reset = () => {
     this.setState({
-      temperature: 15,
-      humidity: 50,
-      pressure: 29.92
+      dataOne: {
+        temperature: 15,
+        humidity: 50,
+        pressure: 29.92
+      }
     })
   }
 
   onChange = (key, value) => {
+    let data = this.state[key[0]];
+    data[key[1]] = value;
     this.setState({
-      [key]: value
+      [key[0]]: data
     })
   }
 
   render() {
-    var { temperature, humidity, pressure, isMobile } = this.state;
+    var { dataOne, dataTwo, isPlaneView, isMobile } = this.state;
 
     return (
       <div>
         <div className="App">
-          <div style={{ display: 'inline-block', width: isMobile ? '90%' : '75%', margin: '0px',
-        maxWidth: isMobile ? null : '500px' }}>
+          <div style={{
+            display: 'inline-block', width: isMobile ? '90%' : '75%', margin: '0px',
+            maxWidth: isMobile ? null : '500px'
+          }}>
             <span style={{ fontSize: '20px' }}>
               True Altitude: Black
               </span>
             <span style={{ fontSize: '20px', float: 'right', color: 'blue' }}>
               Density Altitude: Blue
               </span>
-            <PressureGraph temperature={temperature} humidity={humidity} pressure={pressure}></PressureGraph>
+            {isPlaneView ?
+              <PlaneGraphic /> :
+              <PressureGraph temperature={dataOne.temperature} humidity={dataOne.humidity} pressure={dataOne.pressure}></PressureGraph>
+            }
           </div>
 
           <div style={{ padding: '20px', display: 'inline-block', height: '100%', verticalAlign: 'top' }}>
@@ -66,31 +84,28 @@ class App extends Component {
 
               <NumberSlider
                 label={"Temperature"}
-                value={temperature}
-                keyVal={'temperature'}
+                value={dataOne.temperature}
+                keyVal={['dataOne', 'temperature']}
                 step={1}
                 min={-20} max={50}
                 units={'C'}
                 vertical={!isMobile}
                 onChange={this.onChange} />
-              {/* <NumberSlider
-              label={"Humidity"} value={humidity} min={0} max={100}
-              units={"%"} keyVal={'humidity'} onChange={this.onChange} /> */}
               <NumberSlider
                 label={"Pressure"}
-                value={pressure}
+                value={dataOne.pressure}
                 min={28.60} max={31.00}
                 units={"inHg"}
                 vertical={!isMobile}
                 step={0.03}
-                keyVal={'pressure'}
+                keyVal={['dataOne', 'pressure']}
                 onChange={this.onChange} />
             </div>
 
             <div style={{ padding: '20px 0px 0px 0px' }}>
-              <InputLabel onChange={this.onChange} keyVal={'temperature'} value={temperature} label={"Temperature (C)"} />
+              <InputLabel onChange={this.onChange} keyVal={['dataOne', 'temperature']} value={dataOne.temperature} label={"Temperature (C)"} />
               {/* <InputLabel onChange={this.onChange} keyVal={'humidity'} value={humidity} label={"% Humidity"} /> */}
-              <InputLabel step={0.01} onChange={this.onChange} keyVal={'pressure'} value={pressure} label={"Pressure (inHg)"} />
+              <InputLabel step={0.01} onChange={this.onChange} keyVal={['dataOne', 'pressure']} value={dataOne.pressure} label={"Pressure (inHg)"} />
             </div>
 
 

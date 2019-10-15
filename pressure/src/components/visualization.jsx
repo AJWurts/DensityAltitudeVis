@@ -89,8 +89,9 @@ class PressureGraph extends Component {
         // console.log(temperature, humidity, pressure)
         let minAlt = (29.92 - pressure) * 1000
 
-        let minDAlt = minAlt + (120 * (temperature - 15))
-
+        let minDAlt =(120 * (temperature - 15))  + minAlt
+        
+        console.log(minAlt, minDAlt);
         this.trueAltScale = d3.scaleLinear()
             .domain([0, 10000])
             .range([height, 0])
